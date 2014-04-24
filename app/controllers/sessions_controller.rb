@@ -12,6 +12,8 @@ class SessionsController < ApplicationController
 		end
 	end
 
+
+
 	def create
 
 		@user = User.find_by(email: user_params[:email])
@@ -22,7 +24,7 @@ class SessionsController < ApplicationController
 			redirect_to users_path
 
 		else
-			redirect_to "index"
+			redirect_to root_url
 		end
 	end
 

@@ -2,7 +2,15 @@ class UsersController < ApplicationController
 
 	def index
 		@user = User.find(session[:user_id])
+
+		@users = User.all 
+
 		render "index"
+	end
+
+
+	def edit
+		@user = User.find(params[:id])
 	end
 
 
@@ -15,6 +23,31 @@ class UsersController < ApplicationController
 		else
 			redirect_to root_path
 		end
+	end
+
+
+	def show
+		@user = User.find(params[:id])
+	end
+
+
+	def update
+		@user = User.find(params[:id])
+
+		if @user.update(user_params)
+			redirect_to users_path
+		else
+			render "edit"
+		end
+	end
+
+
+	def destroy #deletes user's profile, clears session
+		@user = User.find(params[:id])
+		@user.destroy
+		session.clear
+
+		redirect_to root_path
 	end
 
 
