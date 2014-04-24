@@ -55,4 +55,23 @@ class Game < ActiveRecord::Base
 
     true if player != midpoint && empty_space?(midpoint)
   end
+
+  def game_over?(piece_id, game_id)
+    opponent_color = Piece.find(piece_id).color
+    game_moves = Moves.where(game_id: game_id)
+
+    game_moves.each do |move|
+      empty_positions = []
+
+      if move.piece.color == opponent_color && move.postition == ''
+        empty_position. << move.piece
+      end
+
+      if empty_positions.length == 12
+        return true
+      else
+        return false
+      end
+    end
+  end
 end
