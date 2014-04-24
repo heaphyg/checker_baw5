@@ -40,4 +40,19 @@ class Game < ActiveRecord::Base
       return false
     end
   end
+
+  def find_square_between_origin_and_destination(start_loc, end_loc)
+    mid_row_sum = (start_loc[0] + end_loc[0])
+    mid_row = mid_row_sum / 2
+    mid_col_sum = (start_loc[1] + end_loc[1])
+    mid_col = mid_col_sum / 2
+    mid_square = [mid_row, mid_col]
+  end
+
+  def opponent_in_jump_midpoint?(start_loc, end_loc)
+    midpoint = find_square_between_origin_and_destination(start_loc, end_loc)
+    player = Board[start_loc[0]][start_loc[1]]
+
+    true if player != midpoint && empty_space?(midpoint)
+  end
 end
