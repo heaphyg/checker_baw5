@@ -17,6 +17,16 @@ class UsersController < ApplicationController
 		end
 	end
 
+	def show
+	end
+
+	def update
+	end
+
+
+	def destroy
+	end
+
 
 	private
 
