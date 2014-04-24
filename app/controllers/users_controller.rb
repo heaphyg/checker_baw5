@@ -3,7 +3,9 @@ class UsersController < ApplicationController
 	def index
 		@user = User.find(session[:user_id])
 
-		@users = User.all 
+		@users = User.all
+		@game_room = GameRoom.new
+		@rooms = GameRoom.all
 
 		render "index"
 	end

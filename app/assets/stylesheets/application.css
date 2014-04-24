@@ -13,3 +13,40 @@
  *= require_tree .
  *= require_self
  */
+
+
+#board-container {
+  width: 900px;
+  height: 850px;
+  background-color: lightgray;
+  margin: 0 auto;
+}
+
+.board {
+  position: relative;
+  /*width: 95%;*/
+  margin: 0 auto;
+  left: 45.0px;
+  top: 15px;
+}
+
+.board-row {
+  position: relative;
+}
+
+.board-cell {
+  width: 100px;
+  height: 100px;
+  float: left;
+
+  margin: 1px 1px 1px 1px;
+}
+
+.red {
+background-color: red;
+}
+
+.black {
+  background-color: black;
+}
+

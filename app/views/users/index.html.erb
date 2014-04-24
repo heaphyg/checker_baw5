@@ -21,8 +21,9 @@
 <p>[Placeholder for Osagie]</p>
 
 <h3>Create Room</h3>
-<%= form_for @room do |f| %>
-  <%= f.text_field :name, placeholder: "Room Name" %>
+<%= form_for @game_room do |f| %>
+  <%= hidden_field_tag :owner, "3" %>
+  <%= f.text_field :room_name, placeholder: "Room Name" %>
   <%= f.submit "Create Room" %>
 <% end %>
 
