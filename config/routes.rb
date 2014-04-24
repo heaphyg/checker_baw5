@@ -1,5 +1,17 @@
 Rails.application.routes.draw do
 
-  root 'users#index'
+  resources :users
+  resources :sessions
+  
 
+
+  # post '/signup' => 'users#new'
+
+	# get '/login' => 'sessions#new'
+	# post '/login' => 'sessions#create'
+	get '/logout', :controller => 'sessions', :action => 'destroy'
+
+
+  # get 'index', to: :index
+  root "sessions#index"
 end
