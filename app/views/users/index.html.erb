@@ -19,7 +19,13 @@
 
 <h3>Game Lobby</h3>
 <p>[Placeholder for Osagie]</p>
-<button>Create room</button>
+
+<h3>Create Room</h3>
+<%= form_for @room do |f| %>
+  <%= f.text_field :name, placeholder: "Room Name" %>
+  <%= f.submit "Create Room" %>
+<% end %>
+
 <h4>List of Rooms</h4>
 <ul>
   <li>Room 1</li>
