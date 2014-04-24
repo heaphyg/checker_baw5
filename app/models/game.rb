@@ -9,8 +9,20 @@ class Game < ActiveRecord::Base
     Board[end_loc[0]][end_loc[1]] == ''
   end
 
+  def move_distance_calculation(start_loc, end_loc)
+    curr_row = start_loc[0]
+    curr_col = start_loc[1]
+    dest_row = end_loc[0]
+    dest_col = end_loc[1]
+
+    if (curr_row - dest_row) == (curr_col - dest_col)
+      move_dist = curr_row - dest_row
+    end
+    return move_dist
+  end
+
   def valid_move?(start_loc, end_loc)
-    move_dist = calc_move_distance(start_loc, end_loc)
+    move_dist = move_distance_calculation(start_loc, end_loc)
     curr_row = start_loc[0]
     curr_col = start_loc[1]
     dest_row = end_loc[0]
