@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
 		end
 	end
 
-	
+
 
 	def create
 
@@ -24,7 +24,7 @@ class SessionsController < ApplicationController
 			redirect_to users_path
 
 		else
-			redirect_to "index"
+			redirect_to root_url
 		end
 	end
 
