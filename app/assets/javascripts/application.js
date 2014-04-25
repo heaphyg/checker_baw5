@@ -22,14 +22,6 @@ Game = {
     init: [],
 }
 
-function Player(name) {
-    this.name = name
-};
-
-function Game() {
-    this.click_holder = []
-};
-
 $(document).ready(function() {
     // $('.board').hide();
 
@@ -57,7 +49,9 @@ $(document).ready(function() {
 
             $("#" + click_holder[0]).html("");
             $("#" + click_holder[1]).html("<div class='piece black'></div>");
+            var cell_unique_id = $(this).attr('id');
             console.log(click_holder)
+            console.log(cell_unique_id)
         }
 
         // $.post("/game/position", data, function(response){
