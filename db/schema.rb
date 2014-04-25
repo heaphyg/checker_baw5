@@ -24,6 +24,12 @@ ActiveRecord::Schema.define(version: 20140425220536) do
     t.datetime "updated_at"
   end
 
+  create_table "game_rooms", force: true do |t|
+    t.string  "room_name"
+    t.integer "game_id"
+    t.integer "user_id"
+  end
+
   create_table "games", force: true do |t|
     t.integer  "winner_id"
     t.integer  "loser_id"
@@ -48,13 +54,6 @@ ActiveRecord::Schema.define(version: 20140425220536) do
   end
 
   create_table "user_games", force: true do |t|
-    t.integer  "game_id"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "usergames", force: true do |t|
     t.integer  "game_id"
     t.integer  "user_id"
     t.datetime "created_at"
