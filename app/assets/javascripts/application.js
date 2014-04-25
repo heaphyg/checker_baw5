@@ -55,7 +55,7 @@ $(document).ready(function() {
         if (click_holder.length < 2) {
             click_holder.push(selected_position)
 
-            $("#"+click_holder[0]).html("");
+            $("#" + click_holder[0]).html("");
             $("#" + click_holder[1]).html("<div class='piece black'></div>");
             console.log(click_holder)
         }
