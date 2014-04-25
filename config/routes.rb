@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :users
   resources :sessions
   resources :rooms
+  resources :games
 
 
   # post '/signup' => 'users#new'
