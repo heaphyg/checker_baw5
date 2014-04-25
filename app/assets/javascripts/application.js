@@ -37,10 +37,12 @@ $(document).ready(function() {
     // $('.board').hide();
 
 
-    $('form').submit(function(event) {
-        event.preventDefault();
-        var p1name = $('input[name="player1"]').val();
-        var p2name = $('input[name="player2"]').val();
+
+    $('#game-menu').submit(function(event){
+      event.preventDefault();
+      var p1name = $('input[name="player1"]').val();
+      var p2name = $('input[name="player2"]').val();
+
 
         console.log(p1name);
         console.log(p2name);
