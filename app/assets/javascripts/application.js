@@ -34,11 +34,10 @@ function Game() {
 
 
 $(document).ready(function() {
-    // $('.board').hide();
+    $('.board').hide();
 
 
-
-    $('#game-menu').submit(function(event){
+    $('.game-menu').submit(function(event){
       event.preventDefault();
       var p1name = $('input[name="player1"]').val();
       var p2name = $('input[name="player2"]').val();
