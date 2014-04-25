@@ -19,58 +19,58 @@
 click_holder = []
 
 Game = {
-  init: [],
+    init: [],
 }
 
-function Player (name) {
-  this.name = name
+function Player(name) {
+    this.name = name
 };
 
 
-function Game () {
-  this.click_holder = []
+function Game() {
+    this.click_holder = []
 };
 
 
 
-$(document).ready(function(){
-  // $('.board').hide();
+$(document).ready(function() {
+    // $('.board').hide();
 
 
-$('form').submit(function(event){
-  event.preventDefault();
-  var p1name = $('input[name="player1"]').val();
-  var p2name = $('input[name="player2"]').val();
+    $('form').submit(function(event) {
+        event.preventDefault();
+        var p1name = $('input[name="player1"]').val();
+        var p2name = $('input[name="player2"]').val();
 
-  console.log(p1name);
-  console.log(p2name);
-
-
-  //show board and display pieces
-  $('.board').show();
-  $('#00').html("<div class='piece black'></div>");
-
-  $('.game-menu').hide()
-  alert('Player 1 make your move');
-
-});
+        console.log(p1name);
+        console.log(p2name);
 
 
+        //show board and display pieces
+        $('.board').show();
+        $('#00').html("<div class='piece black'></div>");
 
-//passing data back to game logic controller
-  $('.board-cell').click(function(){
-      var selected_position = $(this).attr('id');
-      if (click_holder.length < 2 ) {
-        click_holder.push(selected_position)
-        console.log(click_holder)
-      }
+        $('.game-menu').hide()
+        alert('Player 1 make your move');
+
+    });
 
 
-      // $.post("/game/position", data, function(response){
-          //what to do with the response
 
-      // });
-  });
+    //passing data back to game logic controller -
+    $('.board-cell').click(function() {
+        var selected_position = $(this).attr('id');
+        if (click_holder.length < 2) {
+            click_holder.push(selected_position)
+            console.log(click_holder)
+        }
+
+
+        // $.post("/game/position", data, function(response){
+        //what to do with the response
+
+        // });
+    });
 
 
 });
