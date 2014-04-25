@@ -13,3 +13,60 @@
  *= require_tree .
  *= require_self
  */
+
+
+#board-container {
+  width: 1200px;
+  height: 850px;
+  background-color: lightgray;
+  margin: 0 auto;
+}
+
+.game-menu {
+  position: fixed;
+  width: 300px;
+  z-index: 3;
+  background-color: red;
+  border-radius: 3px
+}
+
+.piece {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 60px;
+  border: 5px solid white;
+  z-index: 30;
+  margin: 15px auto;
+}
+
+.board {
+  position: relative;
+  /*width: 95%;*/
+  margin: 0 auto;
+  float: right;
+  padding-right: 0px;
+/*  left: 45.0px;
+  top: 15px;*/
+}
+
+.board-row {
+  position: relative;
+}
+
+.board-cell {
+  width: 100px;
+  height: 100px;
+  float: left;
+
+  margin: 1px 1px 1px 1px;
+}
+
+.red {
+background-color: red;
+}
+
+.black {
+  background-color: black;
+}
+

@@ -21,15 +21,18 @@
 <p>[Placeholder for Osagie]</p>
 
 <h3>Create Room</h3>
-<%= form_for @room do |f| %>
-  <%= f.text_field :name, placeholder: "Room Name" %>
+<%= form_for @game_room do |f| %>
+  <%= hidden_field_tag :owner, "3" %>
+  <%= f.text_field :room_name, placeholder: "Room Name" %>
   <%= f.submit "Create Room" %>
 <% end %>
 
 <h4>List of Rooms</h4>
+
 <ul>
-  <li>Room 1</li>
-  <li>Room 2</li>
+  <% @rooms.each do |room| %>
+  <li><%= link_to "#{room.room_name}", game_room_path(room) %></li>
+  <% end %>
 </ul>
 
 
