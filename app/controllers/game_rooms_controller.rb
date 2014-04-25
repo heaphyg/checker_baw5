@@ -6,15 +6,16 @@ class GameRoomsController < ApplicationController
 
   def create
     @room = GameRoom.new(game_room_params)
+    @game = Game.new
 
-    if @room.save
+    if @room.save && @game.save
       session[:room_id] = @room.id
+      session[:game_id] = @game.id
       redirect_to game_room_path(@room)
     else
       redirect_to users_path
     end
   end
-
 
   private
 
