@@ -32,32 +32,110 @@ describe Game do
     it "method returns true if the destination space is occupied" do
       expect(Game.empty_space?('00')).to eq true
     end
+  end
 
-    context ".move_distance_calculation" do
-      it "calulates the distance between start_loc and end_loc for a contiguous destination" do
-        expect(Game.move_distance_calculation('51', '40')).to eq 1
-      end
-
-      it "calculates the distance between start_loc and end_loc for a jump" do
-        expect(Game.move_distance_calculation('51', '33')).to eq 2
-      end
+  context ".move_distance_calculation" do
+    it "should return positive one" do
+      expect(Game.move_distance_calculation('51', '40', 'B12')).to eq 1
     end
-
-    context ".valid_move?" do
-      it "method returns true if the move is valid (non jump move)" do
-        expect(Game.valid_move?('51', '41')).to eq true
-      end
-
-      # it "method returns true if the move is valid (jump move)" do
-      #   expect(Game.valid_move?('51', '33')).to eq true
-      # end
-
-      # it "method returns false if the move is invalid" do
-      #   expect(Game.valid_move?('51', '43')).to eq false
-      # end
+    it "should return positive two" do
+      expect(Game.move_distance_calculation('51', '33', 'B12')).to eq 2
+    end
+    it "should return negative one" do
+      expect(Game.move_distance_calculation('26', '37', 'R12')).to eq -1
+    end
+    it "should return negative two" do
+      expect(Game.move_distance_calculation('26', '44', 'R12')).to eq -2
+    end
+    it "should return false" do
+      expect(Game.move_distance_calculation('26', '53', 'R12')).to eq false
+    end
+    it "should return false" do
+      expect(Game.move_distance_calculation('53', '26', 'R12')).to eq false
     end
   end
- end
+
+  context ".valid_row_dist? for top to bottom" do
+    it "should return true if destination row index equals the starting row index plus the move distance" do
+      expect(Game.valid_row_dist?('24', '35', -1)).to eq true
+    end
+    it "should return false if destination row index does not equal the starting row index plus the move distance" do
+      expect(Game.valid_row_dist?('24', '37', false)).to eq false
+    end
+  end
+
+  context ".valid_row_dist? for bottom to top" do
+    it "should return true if destination row index equals the starting row index plus the move distance" do
+      expect(Game.valid_row_dist?('53', '44', 1)).to eq true
+    end
+    it "should return false if destination row index does not equal the starting row index plus the move distance" do
+      expect(Game.valid_row_dist?('53', '40', false)).to eq false
+    end
+  end
+
+  context ".valid_col_dist? for top to bottom" do
+    it "should return true if destination column index equals the starting column index plus the move distance" do
+      expect(Game.valid_col_dist?('24', '35', -1)).to eq true
+    end
+    it "should return false if destination column index does not equal the starting column index plus the move distance" do
+      expect(Game.valid_col_dist?('24', '37', -1)).to eq false
+    end
+  end
+
+  context ".valid_col_dist for bottom to top" do
+    it "should return true if destination column index equals the starting column index plus the move distance" do
+      expect(Game.valid_col_dist?('53', '44', 1)).to eq true
+    end
+    it "should return false if destination column index does not equal the starting column index plus the move distance" do
+      expect(Game.valid_col_dist?('53', '40', 1)).to eq false
+    end
+  end
+
+  context ".valid_move? top to bottom" do
+    it "should return true if the move is valid top to bottom non-jump move" do
+      expect(Game.valid_move?('R11', '24', '35')).to eq true
+    end
+
+    it "should return false if the move is move is invalid top to bottom non-jump move" do
+      expect(Game.valid_move?('R11', '24', '37')).to eq false
+    end
+
+    it "method returns true if the move is valid jump move" do
+      expect(Game.valid_move?('R11', '24', '46')).to eq true
+    end
+
+    it "method returns false if the move is invalid jump move" do
+      expect(Game.valid_move?('R11', '24', '57')).to eq false
+    end
+  end
+
+  context ".valid_move? bottom to top" do
+    it "should return true if the move is valid non-jump move" do
+      expect(Game.valid_move?('B11', '53', '31')).to eq true
+    end
+
+    it "should return false if the move is move is invalid non-jump move" do
+      expect(Game.valid_move?('B11', '53', '40')).to eq false
+    end
+
+    it "should return true if the move is valid jump move" do
+      expect(Game.valid_move?('B11', '53', '31')).to eq true
+    end
+
+    it "should return false if the move is invalid jump move" do
+      expect(Game.valid_move?('B11', '53', '22')).to eq false
+    end
+  end
+
+  context ".player_move_direction" do
+    it "should return a positive integer if the player is Red" do
+      expect(Game.player_move_direction('R11')).to eq -1
+    end
+    it "should return a positive integer if the player is Black" do
+      expect(Game.player_move_direction('B11')).to eq 1
+    end
+  end
+end
 
 
 
