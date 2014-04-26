@@ -19,11 +19,11 @@ describe Game do
     Board.create(coord:'31', is_occupied: false, game_id: 1)
     Board.create(coord:'00', is_occupied: true, game_id: 1)
 
-    it "method returns false if the destination space is unoccupied" do
-      expect(Game.empty_space?('31')).to eq false
+    it "method returns true if the destination space is empty" do
+      expect(Game.empty_space?('31')).to eq true
     end
-    it "method returns true if the destination space is occupied" do
-      expect(Game.empty_space?('00')).to eq true
+    it "method returns false if the destination space is not empty" do
+      expect(Game.empty_space?('00')).to eq false
     end
   end
 
@@ -151,29 +151,29 @@ describe Game do
     Board.create(coord:'15', is_occupied: true, game_id: 1)
     Board.create(coord:'17', is_occupied: true, game_id: 1)
     Board.create(coord:'20', is_occupied: true, game_id: 1)
-    Board.create(coord:'22', is_occupied: true, game_id: 1)
-    Board.create(coord:'24', is_occupied: true, game_id: 1)
+    Board.create(coord:'22', is_occupied: false, game_id: 1)
+    Board.create(coord:'24', is_occupied: false, game_id: 1)
     Board.create(coord:'26', is_occupied: true, game_id: 1)
     Board.create(coord:'30', is_occupied: false, game_id: 1)
     Board.create(coord:'31', is_occupied: false, game_id: 1)
     Board.create(coord:'32', is_occupied: false, game_id: 1)
-    Board.create(coord:'33', is_occupied: false, game_id: 1)
+    Board.create(coord:'33', is_occupied: true, game_id: 1)
     Board.create(coord:'34', is_occupied: false, game_id: 1)
-    Board.create(coord:'35', is_occupied: false, game_id: 1)
+    Board.create(coord:'35', is_occupied: true, game_id: 1)
     Board.create(coord:'36', is_occupied: false, game_id: 1)
     Board.create(coord:'37', is_occupied: false, game_id: 1)
     Board.create(coord:'40', is_occupied: false, game_id: 1)
     Board.create(coord:'41', is_occupied: false, game_id: 1)
     Board.create(coord:'42', is_occupied: false, game_id: 1)
     Board.create(coord:'43', is_occupied: false, game_id: 1)
-    Board.create(coord:'44', is_occupied: false, game_id: 1)
+    Board.create(coord:'44', is_occupied: true, game_id: 1)
     Board.create(coord:'45', is_occupied: false, game_id: 1)
-    Board.create(coord:'46', is_occupied: false, game_id: 1)
+    Board.create(coord:'46', is_occupied: true, game_id: 1)
     Board.create(coord:'47', is_occupied: false, game_id: 1)
     Board.create(coord:'51', is_occupied: true, game_id: 1)
     Board.create(coord:'53', is_occupied: true, game_id: 1)
-    Board.create(coord:'55', is_occupied: true, game_id: 1)
-    Board.create(coord:'57', is_occupied: true, game_id: 1)
+    Board.create(coord:'55', is_occupied: false, game_id: 1)
+    Board.create(coord:'57', is_occupied: false, game_id: 1)
     Board.create(coord:'60', is_occupied: true, game_id: 1)
     Board.create(coord:'62', is_occupied: true, game_id: 1)
     Board.create(coord:'64', is_occupied: true, game_id: 1)
@@ -223,9 +223,3 @@ describe Game do
     end
   end
 end
-
-
-
-
-
-

@@ -1,5 +1,10 @@
 class GamesController < ApplicationController
-  def conduct_game
+
+  def create
+    Game.intiialize_board
+  end
+
+  def update
     game_id = session[:game_id]
     start_loc = params[:start_loc].split('').map(&:to_i)
     end_loc = params[:end_loc].split('').map(&:to_i)
