@@ -7,8 +7,12 @@ class Game < ActiveRecord::Base
   has_one :board
   has_many :pieces
 
-  def self.empty_space?(end_loc) #must take a string
-    Board.where(coord: end_loc).first.is_occupied
+  def self.empty_space?(coord) #must take a string
+    if Board.where(coord: coord).first.is_occupied
+      return false
+    else
+      return true
+    end
   end
 
   def self.move_distance_calculation(start_loc, end_loc, unique_piece_id)
@@ -74,7 +78,7 @@ class Game < ActiveRecord::Base
     midpoint_coord = find_square_between_origin_and_destination(start_loc, end_loc)
     player_color = unique_piece_id.split('').shift
 
-    if empty_space?(midpoint_coord) == false
+    if empty_space?(midpoint_coord) == true
       return false
     else
       midpoint_player_color = Piece.where(location: midpoint_coord).first.unique_piece_id.split('').shift
