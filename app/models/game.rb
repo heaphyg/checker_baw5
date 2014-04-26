@@ -6,4 +6,9 @@ class Game < ActiveRecord::Base
   has_many :moves
   has_one :board
   has_many :pieces
+
+  def self.empty_space?(end_loc) #must take a string
+    Board.where(coord: end_loc).first.is_occupied
+  end
+
 end

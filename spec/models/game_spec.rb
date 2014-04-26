@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Game do
-  let(:game) { Game.new }
+  # let(:game) { Game.new }
 
   # context "Game object instantiation" do  # we don't have an initialize method
   #   it "creates a GameController object" do
@@ -22,14 +22,14 @@ describe Game do
 
 
 
-#   context "#empty_space?" do
-
-#     it "returns true" do
-#       expect(game.empty_space?([1,0])).to #true
-#     end
-
-#     it "returns false" do
-#       expect().to #false
-#     end
-#   end
+  context ".empty_space?" do
+    Board.create(coord:'31', is_occupied: false, game_id: 1)
+    Board.create(coord:'00', is_occupied: true, game_id: 1)
+    it "returns true if the destination space is unoccupied" do
+      expect(Game.empty_space?('31')).to eq false
+    end
+    it "returns false if the destination space is occupied" do
+      expect(Game.empty_space?('00')).to eq true
+    end
+  end
  end
