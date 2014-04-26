@@ -11,6 +11,7 @@ class GameRoomsController < ApplicationController
     if @room.save && @game.save
       session[:room_id] = @room.id
       session[:game_id] = @game.id
+      Game.intiialize_board(@game.id)
       redirect_to game_room_path(@room)
     else
       redirect_to users_path
