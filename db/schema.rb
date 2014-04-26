@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20140425220536) do
   end
 
   create_table "pieces", force: true do |t|
+    t.string   "unique_piece_id"
     t.string   "location"
     t.boolean  "is_king"
     t.integer  "game_id"
