@@ -93,37 +93,37 @@ describe Game do
 
   context ".valid_move? top to bottom" do
     it "should return true if the move is valid top to bottom non-jump move" do
-      expect(Game.valid_move?('R11', '24', '35')).to eq true
+      expect(Game.valid_move?('24', '35', 'R11')).to eq true
     end
 
     it "should return false if the move is move is invalid top to bottom non-jump move" do
-      expect(Game.valid_move?('R11', '24', '37')).to eq false
+      expect(Game.valid_move?('24', '37', 'R11')).to eq false
     end
 
     it "method returns true if the move is valid jump move" do
-      expect(Game.valid_move?('R11', '24', '46')).to eq true
+      expect(Game.valid_move?('24', '46', 'R11')).to eq true
     end
 
     it "method returns false if the move is invalid jump move" do
-      expect(Game.valid_move?('R11', '24', '57')).to eq false
+      expect(Game.valid_move?('24', '57', 'R11')).to eq false
     end
   end
 
   context ".valid_move? bottom to top" do
     it "should return true if the move is valid non-jump move" do
-      expect(Game.valid_move?('B11', '53', '31')).to eq true
+      expect(Game.valid_move?('53', '31', 'B11')).to eq true
     end
 
     it "should return false if the move is move is invalid non-jump move" do
-      expect(Game.valid_move?('B11', '53', '40')).to eq false
+      expect(Game.valid_move?('53', '40', 'B11')).to eq false
     end
 
     it "should return true if the move is valid jump move" do
-      expect(Game.valid_move?('B11', '53', '31')).to eq true
+      expect(Game.valid_move?('53', '31', 'B11')).to eq true
     end
 
     it "should return false if the move is invalid jump move" do
-      expect(Game.valid_move?('B11', '53', '22')).to eq false
+      expect(Game.valid_move?('53', '22', 'B11')).to eq false
     end
   end
 
@@ -135,8 +135,50 @@ describe Game do
       expect(Game.player_move_direction('B11')).to eq 1
     end
   end
-end
 
+  context ".find_square_between_origin_and_destination" do
+    it "should return the coord of the square between the start and end locations during a jump move" do
+      expect(Game.find_square_between_origin_and_destination('53', '31')).to eq '42'
+    end
+    it "should return the coord of the square between the start and end locations during a jump move" do
+      expect(Game.find_square_between_origin_and_destination('24', '46')).to eq '35'
+    end
+    it "should return the coord of the square between the start and end locations during a jump move" do
+      expect(Game.find_square_between_origin_and_destination('26', '44')).to eq '35'
+    end
+  end
+
+  context ".opponent_in_jump_midpoint?" do
+    Board.create(coord: '31', is_occupied: false, game_id: 1)
+    Board.create(coord: '33', is_occupied: true, game_id: 1)
+    Board.create(coord: '35', is_occupied: true, game_id: 1)
+    Board.create(coord: '46', is_occupied: true, game_id: 1)
+
+    Piece.create(location: '20', is_king: false, game_id: 1, unique_piece_id: 'R9')
+    Piece.create(location: '33', is_king: false, game_id: 1, unique_piece_id: 'R10')
+    Piece.create(location: '35', is_king: false, game_id: 1, unique_piece_id: 'R11')
+    Piece.create(location: '26', is_king: false, game_id: 1, unique_piece_id: 'R12')
+
+    Piece.create(location: '51', is_king: false, game_id: 1, unique_piece_id: 'B12')
+    Piece.create(location: '53', is_king: false, game_id: 1, unique_piece_id: 'B11')
+    Piece.create(location: '44', is_king: false, game_id: 1, unique_piece_id: 'B10')
+    Piece.create(location: '46', is_king: false, game_id: 1, unique_piece_id: 'B9')
+
+    it "should return true if the square being jumped is occupied by the opponent's piece" do
+
+      expect(Game.opponent_in_jump_midpoint?('35', '57', 'R11')).to eq true
+    end
+    it "should return true if the square being jumped is occupied by the opponent's piece" do
+      expect(Game.opponent_in_jump_midpoint?('44', '22', 'B10')).to eq true
+    end
+    it "should return false if the square is empty" do
+      expect(Game.opponent_in_jump_midpoint?('20', '42', 'R9')).to eq false
+    end
+    it "should return false if the square has the player's own piece" do
+      expect(Game.opponent_in_jump_midpoint?('26', '44', 'B12')).to eq false
+    end
+  end
+end
 
 
 
