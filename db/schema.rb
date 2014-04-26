@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20140425220536) do
 
   create_table "boards", force: true do |t|
     t.string   "coord"
+    t.string   "unique_piece_id"
     t.boolean  "is_occupied"
     t.integer  "game_id"
     t.datetime "created_at"
