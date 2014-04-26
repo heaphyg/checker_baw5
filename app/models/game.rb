@@ -72,19 +72,17 @@ class Game < ActiveRecord::Base
 
   def self.opponent_in_jump_midpoint?(start_loc, end_loc, unique_piece_id)
     midpoint_coord = find_square_between_origin_and_destination(start_loc, end_loc)
-    # midpoint_player_color = Piece.where(location: midpoint_coord).first.unique_piece_id.split('').shift
     player_color = unique_piece_id.split('').shift
 
     if empty_space?(midpoint_coord) == false
-      # "This is the midpoint #{midpoint_coord}"
-      "This is the empty space #{empty_space?(midpoint_coord)}, #{midpoint_coord}"
-      # return false
+      return false
     else
-      # "This is the midpoint #{midpoint_coord}"
-      "This is the empty space #{empty_space?(midpoint_coord)}, #{midpoint_coord}"
-
+      midpoint_player_color = Piece.where(location: midpoint_coord).first.unique_piece_id.split('').shift
+      if player_color == midpoint_player_color
+        return false
+      else
+        return true
+      end
     end
-
-    # true if player_color != midpoint_player_color && empty_space?(midpoint_coord)
   end
 end
