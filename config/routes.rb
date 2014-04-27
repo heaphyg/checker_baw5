@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 	# get '/login' => 'sessions#new'
 	# post '/login' => 'sessions#create'
 	get '/logout', :controller => 'sessions', :action => 'destroy'
-  put '/make_move' => 'games#update'
+  post '/make_move' => 'games#update'
 
   # get 'index', to: :index
   root "sessions#index"

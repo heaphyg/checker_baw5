@@ -1,13 +1,15 @@
 class GamesController < ApplicationController
   def update
+    room_id = session[:room_id]
+    @room = GameRoom.find(room_id)
     game_id = session[:game_id]
     start_loc = params[:start_loc]
     end_loc = params[:end_loc]
-    unique_piece_id = param[:unique_piece_id]
+    unique_piece_id = params[:unique_piece_id]
     midpoint = Game.find_square_between_origin_and_destination(start_loc, end_loc)
 
-    if Game.empty_space?(end_loc) && Game.valid_move?(start_loc, end_loc)
-      move_distance = Game.move_distance_calculation(start_loc, end_loc)
+    if Game.empty_space?(end_loc) && Game.valid_move?(start_loc, end_loc, unique_piece_id)
+      move_distance = Game.move_distance_calculation(start_loc, end_loc, unique_piece_id)
 
       if move_distance == 1
           Board.where(coord: start_loc, game_id: game_id).first.is_occupied = false
