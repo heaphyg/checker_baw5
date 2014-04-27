@@ -15,10 +15,11 @@ class GamesController < ApplicationController
           Board.where(coord: end_loc, game_id: game_id).first.update(is_occupied: true)
           Piece.where(unique_piece_id: unique_piece_id, game_id: game_id).first.update(location: end_loc)
 
-          # puts '==========================='
-          # puts 'This is true, yes you can make this basic ass move'
-          # puts '==========================='
-          return 'true'
+          puts '==========================='
+          puts 'This is true, yes you can make this basic ass move'
+          puts '==========================='
+          validity = 'true'
+          render json: validity
       elsif (move_distance.abs == 2) && Game.valid_move?(start_loc, end_loc, unique_piece_id)
         if Game.opponent_in_jump_midpoint?(start_loc, end_loc, unique_piece_id)
           Board.where(coord: start_loc, game_id: game_id).first.update(is_occupied: false)
@@ -28,30 +29,34 @@ class GamesController < ApplicationController
           Board.where(coord: midpoint, game_id: game_id).first.update(is_occupied: false)
           Piece.where(location: midpoint, game_id: game_id).first.update(location: '')
 
-          # puts '==========================='
-          # puts 'This is true, yes you can jump'
-          # puts '==========================='
-          return 'true'
+          puts '==========================='
+          puts 'This is true, yes you can jump'
+          puts '==========================='
+          validity = 'true'
+          render json: validity
         else
-          # puts '==========================='
-          # puts 'This is false, you cannot make this jump'
-          # puts '==========================='
+          puts '==========================='
+          puts 'This is false, you cannot make this jump'
+          puts '==========================='
           # @error = "Can't jump this space!"
-          return 'false'
+          validity = 'false'
+          render json: validity
         end
       else
-        # puts '==========================='
-        # puts "This is false, wrong number of moves: #{move_distance}"
-        # puts '==========================='
+        puts '==========================='
+        puts "This is false, wrong number of moves: #{move_distance}"
+        puts '==========================='
         # @error = "Wrong number of moves!"
-        return 'false'
+        validity = 'false'
+        render json: validity
       end
     else
-      # puts '==========================='
-      # puts 'This is false, your destination is occupied'
-      # puts '==========================='
+      puts '==========================='
+      puts 'This is false, your destination is occupied'
+      puts '==========================='
       # @error = "Destination is occupied!"
-      return false
+      validity = 'false'
+      render json: validity
     end
   end
 end
