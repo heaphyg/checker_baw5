@@ -104,7 +104,7 @@ Game = {
     },
     validateMove: function(data) {
         $.post("/make_move", data, function(response) {
-            console.log(responose)
+            console.log(response);
         });
     }
 
