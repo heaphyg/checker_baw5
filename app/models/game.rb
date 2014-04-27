@@ -7,11 +7,11 @@ class Game < ActiveRecord::Base
   has_one :board
   has_many :pieces
 
-  def self.empty_space?(coord) #must take a string
-    square = Board.where(coord: coord).first
-    if square && square.is_occupied
+  def self.empty_space?(coord, game_id) #must take a string
+    square = Board.where(coord: coord, game_id: game_id).first
+    if square.is_occupied
       return false
-    elsif square && !square.is_occupied
+    else #square && !square.is_occupied
       return true
     end
   end
@@ -75,14 +75,14 @@ class Game < ActiveRecord::Base
     return "#{mid_row}#{mid_col}"
   end
 
-  def self.opponent_in_jump_midpoint?(start_loc, end_loc, unique_piece_id)
+  def self.opponent_in_jump_midpoint?(start_loc, end_loc, unique_piece_id, game_id)
     midpoint_coord = find_square_between_origin_and_destination(start_loc, end_loc)
     player_color = unique_piece_id.split('').shift
 
-    if empty_space?(midpoint_coord) == true
+    if empty_space?(midpoint_coord, game_id) == true
       return false
     else
-      midpoint_player_color = Piece.where(location: midpoint_coord).first.unique_piece_id.split('').shift
+      midpoint_player_color = Piece.where(location: midpoint_coord, game_id: game_id).first.unique_piece_id.split('').shift
       if player_color == midpoint_player_color
         return false
       else

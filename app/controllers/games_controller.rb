@@ -8,11 +8,11 @@ class GamesController < ApplicationController
     unique_piece_id = params[:unique_piece_id]
     midpoint = Game.find_square_between_origin_and_destination(start_loc, end_loc)
 
-    if Game.empty_space?(end_loc) #&& Game.valid_move?(start_loc, end_loc, unique_piece_id)
+    if Game.empty_space?(end_loc, game_id) #&& Game.valid_move?(start_loc, end_loc, unique_piece_id)
       move_distance = Game.move_distance_calculation(start_loc, end_loc, unique_piece_id)
       if (move_distance.abs == 1) && Game.valid_move?(start_loc, end_loc, unique_piece_id)
-          Board.where(coord: start_loc, game_id: game_id).first.update(is_occupied: false)
-          Board.where(coord: end_loc, game_id: game_id).first.update(is_occupied: true)
+          Board.where(coord: start_loc, game_id: game_id).first.update(is_occupied: false, unique_piece_id: '')
+          Board.where(coord: end_loc, game_id: game_id).first.update(is_occupied: true, unique_piece_id: unique_piece_id)
           Piece.where(unique_piece_id: unique_piece_id, game_id: game_id).first.update(location: end_loc)
 
           puts '==========================='
@@ -21,12 +21,12 @@ class GamesController < ApplicationController
           validity = 'true'
           render json: validity
       elsif (move_distance.abs == 2) && Game.valid_move?(start_loc, end_loc, unique_piece_id)
-        if Game.opponent_in_jump_midpoint?(start_loc, end_loc, unique_piece_id)
-          Board.where(coord: start_loc, game_id: game_id).first.update(is_occupied: false)
-          Board.where(coord: end_loc, game_id: game_id).first.update(is_occupied: true)
+        if Game.opponent_in_jump_midpoint?(start_loc, end_loc, unique_piece_id, game_id)
+          Board.where(coord: start_loc, game_id: game_id).first.update(is_occupied: false, unique_piece_id: '')
+          Board.where(coord: end_loc, game_id: game_id).first.update(is_occupied: true, unique_piece_id: unique_piece_id)
           Piece.where(unique_piece_id: unique_piece_id, game_id: game_id).first.update(location: end_loc)
 
-          Board.where(coord: midpoint, game_id: game_id).first.update(is_occupied: false)
+          Board.where(coord: midpoint, game_id: game_id).first.update(is_occupied: false, unique_piece_id: '')
           Piece.where(location: midpoint, game_id: game_id).first.update(location: '')
 
           puts '==========================='
