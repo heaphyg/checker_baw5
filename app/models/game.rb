@@ -90,7 +90,7 @@ class Game < ActiveRecord::Base
     end
   end
 
-  def self.intiialize_board(game_id)
+  def self.initialize_board(game_id)
     Board.create(coord:'00', is_occupied: true, game_id: game_id)
     Board.create(coord:'02', is_occupied: true, game_id: game_id)
     Board.create(coord:'04', is_occupied: true, game_id: game_id)
@@ -132,6 +132,7 @@ class Game < ActiveRecord::Base
     Board.create(coord:'75', is_occupied: true, game_id: game_id)
     Board.create(coord:'77', is_occupied: true, game_id: game_id)
     # Top player (Red)
+    Piece.create(location: '00', is_king: false, game_id: game_id, unique_piece_id: 'R1')
     Piece.create(location: '02', is_king: false, game_id: game_id, unique_piece_id: 'R2')
     Piece.create(location: '04', is_king: false, game_id: game_id, unique_piece_id: 'R3')
     Piece.create(location: '06', is_king: false, game_id: game_id, unique_piece_id: 'R4')
