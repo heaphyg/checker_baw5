@@ -8,9 +8,10 @@ class Game < ActiveRecord::Base
   has_many :pieces
 
   def self.empty_space?(coord) #must take a string
-    if Board.where(coord: coord).first.is_occupied
+    square = Board.where(coord: coord).first
+    if square && square.is_occupied
       return false
-    else
+    elsif square && !square.is_occupied
       return true
     end
   end
