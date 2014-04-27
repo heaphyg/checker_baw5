@@ -7,11 +7,11 @@ class Game < ActiveRecord::Base
   has_one :board
   has_many :pieces
 
-  def self.empty_space?(coord) #must take a string
-    square = Board.where(coord: coord).first
-    if square && square.is_occupied
+  def self.empty_space?(coord, game_id) #must take a string
+    square = Board.where(coord: coord, game_id: game_id).first
+    if square.is_occupied
       return false
-    elsif square && !square.is_occupied
+    else
       return true
     end
   end
@@ -75,14 +75,14 @@ class Game < ActiveRecord::Base
     return "#{mid_row}#{mid_col}"
   end
 
-  def self.opponent_in_jump_midpoint?(start_loc, end_loc, unique_piece_id)
+  def self.opponent_in_jump_midpoint?(start_loc, end_loc, unique_piece_id, game_id)
     midpoint_coord = find_square_between_origin_and_destination(start_loc, end_loc)
     player_color = unique_piece_id.split('').shift
 
-    if empty_space?(midpoint_coord) == true
+    if empty_space?(midpoint_coord, game_id) == true
       return false
     else
-      midpoint_player_color = Piece.where(location: midpoint_coord).first.unique_piece_id.split('').shift
+      midpoint_player_color = Piece.where(location: midpoint_coord, game_id: game_id).first.unique_piece_id.split('').shift
       if player_color == midpoint_player_color
         return false
       else
@@ -120,18 +120,18 @@ class Game < ActiveRecord::Base
     Board.create(coord:'45', is_occupied: false, game_id: game_id, unique_piece_id: '')
     Board.create(coord:'46', is_occupied: false, game_id: game_id, unique_piece_id: '')
     Board.create(coord:'47', is_occupied: false, game_id: game_id, unique_piece_id: '')
-    Board.create(coord:'51', is_occupied: true, game_id: game_id, unique_piece_id: 'RT12')
-    Board.create(coord:'53', is_occupied: true, game_id: game_id, unique_piece_id: 'RT11')
-    Board.create(coord:'55', is_occupied: true, game_id: game_id, unique_piece_id: 'RT10')
-    Board.create(coord:'57', is_occupied: true, game_id: game_id, unique_piece_id: 'RT9')
-    Board.create(coord:'60', is_occupied: true, game_id: game_id, unique_piece_id: 'RT8')
-    Board.create(coord:'62', is_occupied: true, game_id: game_id, unique_piece_id: 'RT7')
-    Board.create(coord:'64', is_occupied: true, game_id: game_id, unique_piece_id: 'RT6')
-    Board.create(coord:'66', is_occupied: true, game_id: game_id, unique_piece_id: 'RT5')
-    Board.create(coord:'71', is_occupied: true, game_id: game_id, unique_piece_id: 'RT4')
-    Board.create(coord:'73', is_occupied: true, game_id: game_id, unique_piece_id: 'RT3')
-    Board.create(coord:'75', is_occupied: true, game_id: game_id, unique_piece_id: 'RT2')
-    Board.create(coord:'77', is_occupied: true, game_id: game_id, unique_piece_id: 'RT1')
+    Board.create(coord:'51', is_occupied: true, game_id: game_id, unique_piece_id: 'R12')
+    Board.create(coord:'53', is_occupied: true, game_id: game_id, unique_piece_id: 'R11')
+    Board.create(coord:'55', is_occupied: true, game_id: game_id, unique_piece_id: 'R10')
+    Board.create(coord:'57', is_occupied: true, game_id: game_id, unique_piece_id: 'R9')
+    Board.create(coord:'60', is_occupied: true, game_id: game_id, unique_piece_id: 'R8')
+    Board.create(coord:'62', is_occupied: true, game_id: game_id, unique_piece_id: 'R7')
+    Board.create(coord:'64', is_occupied: true, game_id: game_id, unique_piece_id: 'R6')
+    Board.create(coord:'66', is_occupied: true, game_id: game_id, unique_piece_id: 'R5')
+    Board.create(coord:'71', is_occupied: true, game_id: game_id, unique_piece_id: 'R4')
+    Board.create(coord:'73', is_occupied: true, game_id: game_id, unique_piece_id: 'R3')
+    Board.create(coord:'75', is_occupied: true, game_id: game_id, unique_piece_id: 'R2')
+    Board.create(coord:'77', is_occupied: true, game_id: game_id, unique_piece_id: 'R1')
     # Top player (Red)
     Piece.create(location: '00', is_king: false, game_id: game_id, unique_piece_id: 'B1')
     Piece.create(location: '02', is_king: false, game_id: game_id, unique_piece_id: 'B2')
@@ -146,17 +146,17 @@ class Game < ActiveRecord::Base
     Piece.create(location: '24', is_king: false, game_id: game_id, unique_piece_id: 'B11')
     Piece.create(location: '26', is_king: false, game_id: game_id, unique_piece_id: 'B12')
     # Bottom player (Black)
-    Piece.create(location: '51', is_king: false, game_id: game_id, unique_piece_id: 'RT12')
-    Piece.create(location: '53', is_king: false, game_id: game_id, unique_piece_id: 'RT11')
-    Piece.create(location: '55', is_king: false, game_id: game_id, unique_piece_id: 'RT10')
-    Piece.create(location: '57', is_king: false, game_id: game_id, unique_piece_id: 'RT9')
-    Piece.create(location: '60', is_king: false, game_id: game_id, unique_piece_id: 'RT8')
-    Piece.create(location: '62', is_king: false, game_id: game_id, unique_piece_id: 'RT7')
-    Piece.create(location: '64', is_king: false, game_id: game_id, unique_piece_id: 'RT6')
-    Piece.create(location: '66', is_king: false, game_id: game_id, unique_piece_id: 'RT5')
-    Piece.create(location: '71', is_king: false, game_id: game_id, unique_piece_id: 'RT4')
-    Piece.create(location: '73', is_king: false, game_id: game_id, unique_piece_id: 'RT3')
-    Piece.create(location: '75', is_king: false, game_id: game_id, unique_piece_id: 'RT2')
-    Piece.create(location: '77', is_king: false, game_id: game_id, unique_piece_id: 'RT1')
+    Piece.create(location: '51', is_king: false, game_id: game_id, unique_piece_id: 'R12')
+    Piece.create(location: '53', is_king: false, game_id: game_id, unique_piece_id: 'R11')
+    Piece.create(location: '55', is_king: false, game_id: game_id, unique_piece_id: 'R10')
+    Piece.create(location: '57', is_king: false, game_id: game_id, unique_piece_id: 'R9')
+    Piece.create(location: '60', is_king: false, game_id: game_id, unique_piece_id: 'R8')
+    Piece.create(location: '62', is_king: false, game_id: game_id, unique_piece_id: 'R7')
+    Piece.create(location: '64', is_king: false, game_id: game_id, unique_piece_id: 'R6')
+    Piece.create(location: '66', is_king: false, game_id: game_id, unique_piece_id: 'R5')
+    Piece.create(location: '71', is_king: false, game_id: game_id, unique_piece_id: 'R4')
+    Piece.create(location: '73', is_king: false, game_id: game_id, unique_piece_id: 'R3')
+    Piece.create(location: '75', is_king: false, game_id: game_id, unique_piece_id: 'R2')
+    Piece.create(location: '77', is_king: false, game_id: game_id, unique_piece_id: 'R1')
   end
 end
