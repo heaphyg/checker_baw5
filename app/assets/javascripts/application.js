@@ -16,59 +16,93 @@
 //= require websocket_rails/main
 //= require_tree .
 
-click_holder = []
-
-Game = {
-    init: [],
+function Player() {
+    this.name = ""
+    this.pieceColor = ""
+    this.piecesLeft = 12
+    this.clickHolder = []
 }
 
-$(document).ready(function() {
-    // $('.board').hide();
+// Player.prototype.getPlayerMoves = function() {
+//     var that = this;
+//     $('.board-cell').click(function() {
+//         var selected_position = $(this).attr('id');
 
-    $('.game-menu').submit(function(event){
-      event.preventDefault();
-      var p1name = $('input[name="player1"]').val();
-      var p2name = $('input[name="player2"]').val();
+//         if (that.click_holder.length == 1) {
+//             that.click_holder.push(selected_position)
+//             $("#" + that.click_holder[0]).html("");
 
-        console.log(p1name);
-        console.log(p2name);
+//             var cell_unique_id = $(that).attr('id');
+//             console.log(that.click_holder)
+//             console.log(cell_unique_id)
 
-        //show board and display pieces
-        $('.board').show();
-        // $('#00').html("<div class='piece black'></div>");
-        $('.game-menu').hide()
-        alert('Player 1 make your move');
+//         } else if (that.click_holder.length == 2) {
+//             that.click_holder.push(selected_position)
+//             $("#" + that.click_holder[1]).html("<div class='piece" + that.pieceColor + "\'></div>");
+//             console.log(that.click_holder)
+//             console.log(cell_unique_id)
+//         }
+//     })
+// }
 
+
+Game = {
+    winner: "",
+    loser: "",
+    players: [],
+    over: false,
+    makePlayers: function() {
+        var that = this;
+        $('.game-menu').submit(function(event) {
+            event.preventDefault();
+
+            console.log(that);
+            var player1 = new Player();
+            player1.name = $('input[name="player1"]').val();
+            player1.pieceColor = "red"
+            that.players.push(player1)
+
+
+            var player2 = new Player();
+            player2.name = $('input[name="player2"]').val();
+            player2.pieceColor = "black"
+            that.players.push(player2)
+
+            //show board and display pieces
+            $('.board').show();
+            $('.game-menu').hide()
+            alert('Player 1 make your move');
+        })
+    }
+}
+
+    $(document).ready(function() {
+            // $('.board').hide();
+            Game.makePlayers();
+
+
+            // console.log('before while loop')
+            // while (Game.over === false) {
+            //     console.log('during while loop')
+            //     for (var n in Game.players) {
+            //         Game.players[n].getPlayerMoves();
+            //     }
+            //     Game.over = true;
+            // }
+
+            //passing data back to game logic controller -
+
+            //calls controller to validate position
+            // $.post("/game/position", data, function(response) {
+            // });
+
+            // var response = true;
+            // if (response) {
+            //     click_holder = [];
+            //     alert('Awesome Move! Next player\'s turn');
+            // } else {
+            //     alert('Illegal Move! Try Again!');
+            //     $("#" + click_holder[0]).html("<div class='piece black'></div>");
+            //     click_holder = [];
+            // }
     });
-
-    //passing data back to game logic controller -
-    $('.board-cell').click(function() {
-        var selected_position = $(this).attr('id');
-        if (click_holder.length < 2) {
-            click_holder.push(selected_position)
-
-            $("#" + click_holder[0]).html("");
-            $("#" + click_holder[1]).html("<div class='piece black'></div>");
-            var cell_unique_id = $(this).attr('id');
-            console.log(click_holder)
-            console.log(cell_unique_id)
-        }
-
-        // $.post("/game/position", data, function(response){
-        //what to do with the response
-        // });
-
-        var response = true;
-
-        if (response) {
-            click_holder = [];
-            alert('Awesome Move! Next player\'s turn');
-        } else {
-            alert('Illegal Move! Try Again!');
-            $("#" + click_holder[0]).html("<div class='piece black'></div>");
-            click_holder = [];
-        }
-
-    });
-
-});
