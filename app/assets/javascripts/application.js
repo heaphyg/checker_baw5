@@ -23,34 +23,34 @@ function Player() {
     this.clickHolder = []
 }
 
-// Player.prototype.getPlayerMoves = function() {
-//     var that = this;
-//     $('.board-cell').click(function() {
-//         var selected_position = $(this).attr('id');
+Player.prototype.getPlayerMoves = function() {
+    var that = this;
+    $('.board-cell').click(function() {
+        var selected_position = $(this).attr('id');
 
-//         if (that.click_holder.length == 1) {
-//             that.click_holder.push(selected_position)
-//             $("#" + that.click_holder[0]).html("");
+        if (that.click_holder.length == 1) {
+            that.click_holder.push(selected_position)
+            $("#" + that.click_holder[0]).html("");
 
-//             var cell_unique_id = $(that).attr('id');
-//             console.log(that.click_holder)
-//             console.log(cell_unique_id)
+            var cell_unique_id = $(that).attr('id');
+            console.log(that.click_holder)
+            console.log(cell_unique_id)
 
-//         } else if (that.click_holder.length == 2) {
-//             that.click_holder.push(selected_position)
-//             $("#" + that.click_holder[1]).html("<div class='piece" + that.pieceColor + "\'></div>");
-//             console.log(that.click_holder)
-//             console.log(cell_unique_id)
-//         }
-//     })
-// }
-
+        } else if (that.click_holder.length == 2) {
+            that.click_holder.push(selected_position)
+            $("#" + that.click_holder[1]).html("<div class='piece" + that.pieceColor + "\'></div>");
+            console.log(that.click_holder)
+            console.log(cell_unique_id)
+        }
+    })
+}
 
 Game = {
     winner: "",
     loser: "",
     players: [],
     over: false,
+    playersReadyToMove: false,
     makePlayers: function() {
         var that = this;
         $('.game-menu').submit(function(event) {
@@ -59,20 +59,20 @@ Game = {
             console.log(that);
             var player1 = new Player();
             player1.name = $('input[name="player1"]').val();
-            player1.pieceColor = "red"
-            that.players.push(player1)
+            player1.pieceColor = "red";
+            that.players.push(player1);
 
 
             var player2 = new Player();
             player2.name = $('input[name="player2"]').val();
-            player2.pieceColor = "black"
-            that.players.push(player2)
+            player2.pieceColor = "black";
+            that.players.push(player2);
 
             //show board and display pieces
             $('.board').show();
-            $('.game-menu').hide()
-            alert('Player 1 make your move');
-        })
+            $('.game-menu').hide();
+            that.playersReadyToMove = true;
+        });
     }
 }
 
@@ -80,15 +80,21 @@ Game = {
             // $('.board').hide();
             Game.makePlayers();
 
+            console.log('before while loop')
 
-            // console.log('before while loop')
-            // while (Game.over === false) {
-            //     console.log('during while loop')
-            //     for (var n in Game.players) {
-            //         Game.players[n].getPlayerMoves();
-            //     }
-            //     Game.over = true;
-            // }
+            if (Game.playersReadyToMove === true ) {
+                console.log("THISH HSHSH")
+                    while (Game.over === false) {
+                    console.log('during while loop')
+                        alert('Player 1 make your move');
+                        Game.players[0].getPlayerMoves();
+
+                        alert('Player 2 make your move');
+                        Game.players[1].getPlayerMoves();
+                        Game.over = true;
+                }
+
+            }
 
             //passing data back to game logic controller -
 
