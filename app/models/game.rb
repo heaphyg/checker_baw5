@@ -11,7 +11,7 @@ class Game < ActiveRecord::Base
     square = Board.where(coord: coord, game_id: game_id).first
     if square.is_occupied
       return false
-    else #square && !square.is_occupied
+    else
       return true
     end
   end
