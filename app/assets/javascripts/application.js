@@ -21,26 +21,34 @@ function Player() {
     this.pieceColor = ""
     this.piecesLeft = 12
     this.clickHolder = []
+    this.controllerData = {
+        start_loc: "",
+        end_loc: "",
+        unique_piece_id: ""
+    }
 }
 
 Player.prototype.getPlayerMoves = function() {
     var that = this;
     $('.board-cell').click(function() {
         var selected_position = $(this).attr('id');
+        var pieceId = $(".board-cell > div").attr('id');
 
-        if (that.click_holder.length == 1) {
-            that.click_holder.push(selected_position)
-            $("#" + that.click_holder[0]).html("");
+        that.controllerData.unique_piece_id = pieceId;
 
-            var cell_unique_id = $(that).attr('id');
-            console.log(that.click_holder)
-            console.log(cell_unique_id)
+        if (that.clickHolder.length === 0) {
+            that.clickHolder.push(selected_position)
+            $("#" + that.clickHolder[0]).html("");
 
-        } else if (that.click_holder.length == 2) {
-            that.click_holder.push(selected_position)
-            $("#" + that.click_holder[1]).html("<div class='piece" + that.pieceColor + "\'></div>");
-            console.log(that.click_holder)
-            console.log(cell_unique_id)
+            // var cell_unique_id = $(that).attr('id');
+            that.controllerData.start_loc = selected_position;
+
+        } else if (that.clickHolder.length === 1) {
+            that.clickHolder.push(selected_position)
+            $("#" + that.clickHolder[1]).html("<div class='piece " + that.pieceColor + "\'></div>");
+
+            that.controllerData.end_loc = selected_position;
+            console.log("cd.. " + that.controllerData)
         }
     })
 }
@@ -50,8 +58,7 @@ Game = {
     loser: "",
     players: [],
     over: false,
-    playersReadyToMove: false,
-    makePlayers: function() {
+    init: function() {
         var that = this;
         $('.game-menu').submit(function(event) {
             event.preventDefault();
@@ -71,44 +78,60 @@ Game = {
             //show board and display pieces
             $('.board').show();
             $('.game-menu').hide();
-            that.playersReadyToMove = true;
+
+            //cue movement
+            that.startRound(that.validateMove);
+
+        });
+    },
+    startRound: function(callback) {
+        this.players[0].getPlayerMoves();
+        // var data = this.players[0].controllerData;
+
+        //checking if server gives correct response
+        var data = {
+            start_loc: "51",
+            end_loc: "40",
+            unique_piece_id: "B1"
+        }
+
+        //next line needs to wait until there's data to send before executing
+        if (!data.end_loc == "") {
+            console.log(data)
+            callback(data);
+        }
+
+    },
+    validateMove: function(data) {
+        $.post("/make_move", data, function(response) {
+            console.log(responose)
         });
     }
+
 }
 
-    $(document).ready(function() {
-            // $('.board').hide();
-            Game.makePlayers();
 
-            console.log('before while loop')
 
-            if (Game.playersReadyToMove === true ) {
-                console.log("THISH HSHSH")
-                    while (Game.over === false) {
-                    console.log('during while loop')
-                        alert('Player 1 make your move');
-                        Game.players[0].getPlayerMoves();
 
-                        alert('Player 2 make your move');
-                        Game.players[1].getPlayerMoves();
-                        Game.over = true;
-                }
+$(document).ready(function() {
+    // $('.board').hide();
+    Game.init();
 
-            }
 
-            //passing data back to game logic controller -
 
-            //calls controller to validate position
-            // $.post("/game/position", data, function(response) {
-            // });
+    //passing data back to game logic controller -
 
-            // var response = true;
-            // if (response) {
-            //     click_holder = [];
-            //     alert('Awesome Move! Next player\'s turn');
-            // } else {
-            //     alert('Illegal Move! Try Again!');
-            //     $("#" + click_holder[0]).html("<div class='piece black'></div>");
-            //     click_holder = [];
-            // }
-    });
+    //calls controller to validate position
+    // $.post("/game/position", data, function(response) {
+    // });
+
+    // var response = true;
+    // if (response) {
+    //     click_holder = [];
+    //     alert('Awesome Move! Next player\'s turn');
+    // } else {
+    //     alert('Illegal Move! Try Again!');
+    //     $("#" + click_holder[0]).html("<div class='piece black'></div>");
+    //     click_holder = [];
+    // }
+});
