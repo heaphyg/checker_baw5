@@ -26,11 +26,16 @@ function trimClass(class_text) {
 
 
 function Player() {
-    this.name = ""
-    this.pieceColor = ""
-    this.piecesLeft = 12
-    this.clickHolder = []
+    this.name = "",
+    this.pieceColor = "",
+    this.piecesLeft = 12,
+    this.clickHolder = [],
     this.controllerData = {
+        start_loc: "",
+        end_loc: "",
+        unique_piece_id: ""
+    },
+    this.resetData = {
         start_loc: "",
         end_loc: "",
         unique_piece_id: ""
@@ -75,6 +80,9 @@ Player.prototype.getPlayerMoves = function() {
                 that.controllerData.end_loc = selected_position;
             } else {
                 alert('Ehh, so you\'ve never played checkers before. Try again!');
+                $("#" + that.clickHolder[0]).html("<div class='piece " + that.pieceColor + "\'></div>");
+                that.clickHolder = [];
+                that.controllerData = that.resetData;
             }
         }
 
@@ -88,7 +96,7 @@ Game = {
     over: false,
     init: function() {
         var that = this;
-        $('.game-menu').submit(function(event) {
+        $('#player_names').submit(function(event) {
             event.preventDefault();
 
             console.log(that);
