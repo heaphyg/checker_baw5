@@ -1,12 +1,11 @@
-<p>Welcome to GameRoom</p>
-
 <div id="board-container">
   <div class="game-menu">
-    <h2>Welcome to BAW5E Checkers!</h2>
+    <h4 class="whiter">Welcome to</h4>
+    <h3 class="whiter"><%= @game_room.room_name %></h3>
     <form id="player_names">
-      <input type="text" name="player1" placeholder="Player 1, enter name here..."><br />
-      <input type="text" name="player2" placeholder="Player 2, enter name here..."><br />
-      <input type="submit" value="Start Game">
+      <input type="text" name="player1" class='form-control col-xs-3' placeholder="Player 1, enter name here..."><br />
+      <input type="text" name="player2" class='form-control col-xs-3' placeholder="Player 2, enter name here..."><br />
+      <input type="submit" class='btn btn-primary' value="Start Game">
     </form>
   </div>
 
