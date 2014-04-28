@@ -2,6 +2,7 @@ class GameRoomsController < ApplicationController
 
   def show
     @game = GameRoom.find(params[:id])
+    @game_room = GameRoom.find(params[:id])
   end
 
   def create

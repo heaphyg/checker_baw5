@@ -1,41 +1,54 @@
-<h2>This is the Dashboard Page</h2>
+<div class="jumbotron well">
+  <h1>Baw5 Checkers Dashboard</h1>
+</div>
+<div class='mycontainer thumbnail'>
+  <h3>Welcome <%= @user.name %></h3>
 
-<h3>Welcome <%= @user.name %></h3>
+  <p>
+      <%= link_to 'View Profile', user_path(@user), { :class=>('label label-primary') } %>
+      &nbsp; 
+      <%= link_to 'Delete Profile', user_path(@user),  :class=>('label label-primary'), method: :delete, data: { confirm: 'This will permanently delete your account. Do you want to delete?'} %>
+      &nbsp;
+      <%= link_to 'Edit Profile', edit_user_path(@user), { :class=>('label label-primary') } %>
+  </p>
+</div>
 
-<p><%= link_to 'View Profile', user_path(@user) %> | <%= link_to 'Delete Profile', user_path(@user), method: :delete, data: { confirm: 'This will permanently delete your account. Do you want to delete?'} %>  | <%= link_to 'Edit Profile', edit_user_path(@user) %></p>
+<div class='mycontainer thumbnail'>
 
+  <h3>Players</h3>
+  <ul>
+  	<% @users.each do |user| %>
+  	<li><%= user.name %></li>
+  	<% end %>
+  </ul>
+</div>
+<div class="table-responsive mycontainer thumbnail">
+  <table class="table">
+    <tr>
+      <td>
 
-<hr>
+        <div class="right-side">
+          <%= form_for @game_room do |f| %>
+          <h3>Create Room</h3>
+            <%= hidden_field_tag :owner, "3" %>
+            <%= f.text_field :room_name, placeholder: "Room Name", :class=>('form-control col-xs-3')  %>
+            <%= f.submit "Create Room", { :class=>('btn btn-primary') } %>
+          <% end %>
+        </div>
+        
 
-
-<h3>Players</h3>
-<ul>
-	<% @users.each do |user| %>
-	<li><%= user.name %></li>
-	<% end %>
-</ul>
-
-<hr>
-
-<h3>Game Lobby</h3>
-<p>[Placeholder for Osagie]</p>
-
-<h3>Create Room</h3>
-<%= form_for @game_room do |f| %>
-  <%= hidden_field_tag :owner, "3" %>
-  <%= f.text_field :room_name, placeholder: "Room Name" %>
-  <%= f.submit "Create Room" %>
-<% end %>
-
-<h4>List of Rooms</h4>
-
-<ul>
-  <% @rooms.each do |room| %>
-  <li><%= link_to "#{room.room_name}", game_room_path(room) %></li>
-  <% end %>
-</ul>
-
-
-
-<%= link_to "Sign out", logout_path %>
-<!-- This is currently a get, should be a post -->
+        <div class="left-side">
+            <h4>List of Rooms</h4>
+            <ul>
+              <% @rooms.each do |room| %>
+              <li><%= link_to "#{room.room_name}", game_room_path(room) %></li>
+              <% end %>
+            </ul>
+        </div>
+        
+      </td>
+      <td>
+      </td>
+    </tr>
+  </table>
+</div>
