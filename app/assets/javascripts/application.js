@@ -16,12 +16,26 @@
 //= require websocket_rails/main
 //= require_tree .
 
+
+//Helper Functions
+function trimClass(class_text) {
+    var re = /\s.+$/;
+    var thing = re.exec(class_text);
+    return $.trim(thing)
+}
+
+
 function Player() {
-    this.name = ""
-    this.pieceColor = ""
-    this.piecesLeft = 12
-    this.clickHolder = []
+    this.name = "",
+    this.pieceColor = "",
+    this.piecesLeft = 12,
+    this.clickHolder = [],
     this.controllerData = {
+        start_loc: "",
+        end_loc: "",
+        unique_piece_id: ""
+    },
+    this.resetData = {
         start_loc: "",
         end_loc: "",
         unique_piece_id: ""
@@ -32,24 +46,46 @@ Player.prototype.getPlayerMoves = function() {
     var that = this;
     $('.board-cell').click(function() {
         var selected_position = $(this).attr('id');
-        var pieceId = $(".board-cell > div").attr('id');
 
-        that.controllerData.unique_piece_id = pieceId;
+        //validates initial move is the right color for player
+        var clicked_position_first_child = $(this).find(':first-child');
+        var pieceId = $(clicked_position_first_child).attr('id');
+        var pieceClass = $(clicked_position_first_child).attr('class');
+
+        //get color of second cell
+        var clicked_position_class = $(this).attr('class');
+
+        console.log(selected_position + " " + pieceId + " " + pieceClass);
+
+        var initialPieceColor = trimClass(pieceClass);
+
 
         if (that.clickHolder.length === 0) {
-            that.clickHolder.push(selected_position)
-            $("#" + that.clickHolder[0]).html("");
 
-            // var cell_unique_id = $(that).attr('id');
-            that.controllerData.start_loc = selected_position;
+            if (initialPieceColor == that.pieceColor) {
+                that.controllerData.unique_piece_id = pieceId;
+                that.clickHolder.push(selected_position);
+                $("#" + that.clickHolder[0]).html("");
+                that.controllerData.start_loc = selected_position;
+            } else {
+                alert("Wrong color moron. Try again!");
+            }
 
         } else if (that.clickHolder.length === 1) {
-            that.clickHolder.push(selected_position)
-            $("#" + that.clickHolder[1]).html("<div class='piece " + that.pieceColor + "\'></div>");
+            var trimmed_clicked_position_class = trimClass(clicked_position_class);
 
-            that.controllerData.end_loc = selected_position;
-            console.log("cd.. " + that.controllerData)
+            if (trimmed_clicked_position_class == "red") {
+                that.clickHolder.push(selected_position);
+                $("#" + that.clickHolder[1]).html("<div class='piece " + that.pieceColor + "\'></div>");
+                that.controllerData.end_loc = selected_position;
+            } else {
+                alert('Ehh, so you\'ve never played checkers before. Try again!');
+                $("#" + that.clickHolder[0]).html("<div class='piece " + that.pieceColor + "\'></div>");
+                that.clickHolder = [];
+                that.controllerData = that.resetData;
+            }
         }
+
     })
 }
 
@@ -60,7 +96,7 @@ Game = {
     over: false,
     init: function() {
         var that = this;
-        $('.game-menu').submit(function(event) {
+        $('#player_names').submit(function(event) {
             event.preventDefault();
 
             console.log(that);
@@ -79,12 +115,12 @@ Game = {
             $('.board').show();
             $('.game-menu').hide();
 
-            //cue movement
-            that.startRound(that.validateMove);
+            //cue movement, that.validateMove
+            that.startRound();
 
         });
     },
-    startRound: function(callback) {
+    startRound: function() {
         this.players[0].getPlayerMoves();
         // var data = this.players[0].controllerData;
 
@@ -95,11 +131,13 @@ Game = {
             unique_piece_id: "B1"
         }
 
+        var new_data = JSON.stringify(data)
+
         //next line needs to wait until there's data to send before executing
-        if (!data.end_loc == "") {
-            console.log(data)
-            callback(data);
-        }
+        // if (!data.end_loc == "") {
+        console.log(data)
+        // callback(new_data);
+        // }
 
     },
     validateMove: function(data) {
@@ -112,26 +150,8 @@ Game = {
 
 
 
-
 $(document).ready(function() {
-    // $('.board').hide();
+
     Game.init();
 
-
-
-    //passing data back to game logic controller -
-
-    //calls controller to validate position
-    // $.post("/game/position", data, function(response) {
-    // });
-
-    // var response = true;
-    // if (response) {
-    //     click_holder = [];
-    //     alert('Awesome Move! Next player\'s turn');
-    // } else {
-    //     alert('Illegal Move! Try Again!');
-    //     $("#" + click_holder[0]).html("<div class='piece black'></div>");
-    //     click_holder = [];
-    // }
 });
