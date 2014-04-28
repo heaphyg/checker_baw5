@@ -1,23 +1,25 @@
-<h1>Yo!</h1>
+<div class='mycontainer thumbnail'>
 
-
-<h3>Login</h3>
-<%= form_for @user, url: sessions_url do |f| %>
-	<%= f.email_field :email, placeholder: "Email" %>
-	<%= f.password_field :password, placeholder: "Password" %>
-	<%= f.submit "Login" %>
-<% end %>
-
+  <h3>Login</h3>
+  <%= form_for @user, url: sessions_url do |f| %>
+  	<%= f.email_field :email, placeholder: "Email", :class=>('form-control col-xs-3')  %>
+        <br>
+  	<%= f.password_field :password, placeholder: "Password", :class=>('form-control col-xs-3')  %>
+    <br>
+  	<%= f.submit "Login", { :class=>('btn btn-primary') } %>
+  <% end %>
 <hr>
+<br>
 
-<h3>Sign Up</h3>
-<%= form_for @user do |f| %>
-	<%= f.text_field :name, placeholder: "Name" %>
-	<%= f.email_field :email, placeholder: "Email" %>
-	<%= f.password_field :password, placeholder: "Password"%>
-	<%= f.password_field :password_confirmation, placeholder: "Confirm password" %>
-	<%= f.submit "Sign Up!" %>
-<% end %>
+  <h3>Sign Up</h3>
+  <%= form_for @user do |f| %>
+  	<%= f.text_field :name, placeholder: "Name", :class=>('form-control col-xs-3') %><br>
+  	<%= f.email_field :email, placeholder: "Email", :class=>('form-control col-xs-3')  %><br>
+  	<%= f.password_field :password, placeholder: "Password", :class=>('form-control col-xs-3') %><br>
+  	<%= f.password_field :password_confirmation, placeholder: "Confirm password", :class=>('form-control col-xs-3')  %><br>
+  	<%= f.submit "Sign Up!", { :class=>('btn btn-primary') } %>
+  <% end %>
+</div>
 
 
 

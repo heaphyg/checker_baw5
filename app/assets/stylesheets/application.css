@@ -13,7 +13,57 @@
  *= require_tree .
  *= require_self
  */
+h1, h2, h3, h4 {
+  color: #777;
+}
 
+body
+{
+  background-image:url('backg4.png');
+}
+
+form{
+  margin-left: 80px; 
+}
+
+.profile-pic {
+  float: right;
+}
+
+.whiter {
+  padding-left: 2px;
+  color: #FFF;
+}
+
+.jumbotron {
+  text-align: center;
+  color: #777;
+}
+
+.float-left-side {
+  float: left;
+}
+
+.float-right-side {
+  float: right;
+}
+
+.right-side {
+  float: right;
+}
+
+.label:a{
+  text-decoration: none;
+}
+
+.mycontainer {
+  width: 65%;
+  margin: auto;
+  background:#C4C4C4;
+  border-radius: 5px;
+  padding: 10px 20px;
+  box-shadow:  10px;
+}
 
 #board-container {
   width: 1200px;
@@ -60,12 +110,12 @@
   height: 100px;
   float: left;
 
+
   margin: 1px 1px 1px 1px;
 }
 
 .red {
-background-color: red;
-
+  background-color: red;
 }
 
 .black {
