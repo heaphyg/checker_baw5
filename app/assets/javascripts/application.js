@@ -16,6 +16,8 @@
 //= require websocket_rails/main
 //= require_tree .
 
+//this is a comment
+
 function Player() {
     this.name = ""
     this.pieceColor = ""
