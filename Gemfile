@@ -31,6 +31,7 @@ gem 'spring',        group: :development
 
 
 gem 'faker', require: false
+gem 'coveralls', require: false
 
 
 #Bootstrap
