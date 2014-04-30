@@ -1,3 +1,5 @@
+require 'faker'
+
 # 2 users
 2.times do
 	name = Faker::Name.name

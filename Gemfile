@@ -30,7 +30,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
 
-gem 'faker',          group: :development
+gem 'faker', require: false
 
 
 #Bootstrap
